@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns:salesforce="http://www.mulesoft.org/schema/mule/salesforce"
+	xmlns:http="http://www.mulesoft.org/schema/mule/http"
+	xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/salesforce http://www.mulesoft.org/schema/mule/salesforce/current/mule-salesforce.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+	<http:listener-config name="HTTP_Listener_config" doc:name="HTTP Listener config" doc:id="e65caa01-a69f-48af-af65-208b63a05fb3" >
+		<http:listener-connection host="0.0.0.0" port="8081" />
+	</http:listener-config>
+	<salesforce:sfdc-config name="Salesforce_Config" doc:name="Salesforce Config" doc:id="45255c0f-76d7-4273-91e9-19ef9194aba4" >
+		<salesforce:basic-connection username="krishna@1tcs.com" password="Karthik@1" securityToken="IWW2wUYYQpalR960d9e0Ql27u" />
+	</salesforce:sfdc-config>
+	<flow name="19112020Flow" doc:id="f14edc6e-4e69-411c-a7a0-430544b7dd5e" >
+		<http:listener doc:name="Listener" doc:id="5d494cd8-a5ef-4b77-b2d3-42363524a618" config-ref="HTTP_Listener_config" path="/api"/>
+		<logger level="INFO" doc:name="Logger" doc:id="f9919304-c3fb-4a65-bb74-d1dc7117a39b" message="git"/>
+		<salesforce:query doc:name="Query" doc:id="6f54378a-2673-4946-815c-b6591f1283e5" config-ref="Salesforce_Config">
+			<salesforce:salesforce-query ><![CDATA[select OwnerId from account where AccountNumber= 'CD656092']]></salesforce:salesforce-query>
+		</salesforce:query>
+		<ee:transform doc:name="Transform Message" doc:id="bb7179f1-8313-419c-9d96-9a4d251a2f34" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+payload]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+		<logger level="INFO" doc:name="Logger" doc:id="1cf522ee-5984-4c9e-a440-dbc669f8c52b" message="#[payload]"/>
+	</flow>
+</mule>
