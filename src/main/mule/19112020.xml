@@ -14,7 +14,7 @@ http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/
 	</salesforce:sfdc-config>
 	<flow name="19112020Flow" doc:id="f14edc6e-4e69-411c-a7a0-430544b7dd5e" >
 		<http:listener doc:name="Listener" doc:id="5d494cd8-a5ef-4b77-b2d3-42363524a618" config-ref="HTTP_Listener_config" path="/api"/>
-		<logger level="INFO" doc:name="Logger" doc:id="f9919304-c3fb-4a65-bb74-d1dc7117a39b" message="git before query"/>
+		<logger level="INFO" doc:name="Logger" doc:id="f9919304-c3fb-4a65-bb74-d1dc7117a39b" message="git before query2"/>
 		<salesforce:query doc:name="Query" doc:id="6f54378a-2673-4946-815c-b6591f1283e5" config-ref="Salesforce_Config">
 			<salesforce:salesforce-query ><![CDATA[select OwnerId from account where AccountNumber= 'CD656092']]></salesforce:salesforce-query>
 		</salesforce:query>
